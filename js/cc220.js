@@ -62,7 +62,7 @@ var CETEI;
 if (CETEI) {
 	var CETEIcean = new CETEI()
 	//CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis/main/tei/gen-noah-flood-chiasm_main.xml", function(data) {
-	CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis-2023/main/gen_creation1_eden_cain-abel_noah-flood_babel_main_2.xml", function(data) {
+	CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis-2023/main/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.xml", function(data) {
 	//CETEIcean.getHTML5("tei/gen-noah-flood-chiasm_main.xml", function(data) {
 		document.getElementById("TEI").appendChild(data);		
 		$('tei-anchor').wrap(function(){
