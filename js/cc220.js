@@ -37,7 +37,20 @@ function showPage(page){
 	$("#page").load(html);
 	$("#page").show();
 	$("#text").hide();
+};
+
+function capitalizeTitle(title) {
+	var lowercaseWords = ["the", "an", "a", "of", "for", "in", "under", "with", "on", "in"];
+	return title.split("_").map((word, index) => {
+		if (index === 0 ||
+			lowercaseWords.indexOf(word.toLowerCase()) === -1) {
+			return word.substring(0, 1).toUpperCase() + word.substring(1);
+		}
+		return word.toLowerCase();
+		
+	}).join(" ");
 }
+
 
 $(document).on("click", ".nav-item", function() {
 	$('.nav-item').removeClass('active');
@@ -81,9 +94,12 @@ if (CETEI) {
 			var newId = $(this).attr("xml\:id").replace("pr","'").replace(/_/g, " ");
 			$(this).attr("display", newId);
 		});
-		themes.setHtml();
 		$("tei-seg[type='verse']").wrap("<sup />");
 		$("tei-anchor").html("<sup><i class='far fa-comment-alt light'></i><sup>");
+		$('tei-div[ana]').each(function(){
+			var prettyAna = capitalizeTitle($(this).attr("ana"));
+			$(this).prepend("<span class='sectionTitle'>" + prettyAna + "</span>")
+		})
 		prepareNotePopovers(teiPanel.selector);
 	});	
 }
@@ -114,48 +130,6 @@ $(document).on("change", mainViewMode.selector, function() {
 	outlinePanel.clearHighlighting();
 });
 
-
-/*** THEMES ***/
-
-var themes = {
-	thematicElementSelector: "tei-seg[ana!=''][ana]",
-	htmlSectionSelector: "#themesHtml",
-	setHtml: function(){
-		var thematicGroupings = {};
-		$(this.thematicElementSelector).each(function(){
-			var theme = $(this).attr("ana");
-			theme = theme.replace("#","");
-			var text = $(this).text();
-			text = getBeginningWords(text, 5);
-			if(thematicGroupings[theme]){
-				thematicGroupings[theme].push(text);
-			} else {
-				thematicGroupings[theme] = [text];			
-			}
-			
-		});
-		var htmlArray = [];
-		Object.entries(thematicGroupings).forEach(function(group){
-			var [key, valueArray] = group;
-			html = '<div class="accordion"> \
-              <span class="small">'+key+'</span> \
-              <div> \
-                <span class="badge">'+valueArray.length+'</span> \
-                <span><i class="fas fa-chevron-down arrow light" aria-hidden="true"></i><span class="sr-only">Expand or collapse section</span></span> \
-              </div> \
-            </div> \
-            <div class="interp-group"> \
-              <span class="small light choose-formatting"> Choose formatting</span>';
-            
-            valueArray.forEach(function(value){
-				html = html+'<p class="small">'+value+'</p>'
-            });
-            var html = html+'</div>';      
-            htmlArray.push(html);
-		});
-		$(this.htmlSectionSelector).html(htmlArray.join(""));
-	}
-}
 
 /*** DOCUMENTARY SOURCES ***/
 
@@ -287,7 +261,6 @@ var parallelPanel = {
 	toggleSelector: "#parallel-toggle",
 	toggleLabelSelector: "label[for='parallel-toggle']",
 	compatibleViews: ["chapter-view", "chiastic-view", "outline-view"],
-
 	setVisibility: function() {
 		if(this.getVisibility()){
 			$(this.selector).show();
@@ -319,7 +292,7 @@ var parallelPanel = {
 			$(this.toggleSelector).hide();
 			$(this.toggleLabelSelector).hide();
 		}
-		$(this.htmlSectionSelector).html("<p class='small'><i>Hover over a section of the text to view its chiastic parallel in this panel.</i></p>");
+		$(this.htmlSectionSelector).html("<p class='small'><i>Hover over a section of the text to view its parallel in this panel.</i></p>");
 	},
 	setHtml: function(sectionSelector) {
 		var selectedView = mainViewMode.getSelectedView();
@@ -338,10 +311,10 @@ var parallelPanel = {
 			$(this.toggleLabelSelector).text("Show chiastic parallel");
 			if(sectionSelector){
 				var partnerId = $(teiParallel.selector+"[corresp='"+sectionSelector+"']").attr("id");
-				$(this.htmlSectionSelector).html("<span id='parallelLink' data-corresp='#"+partnerId+"'>Chiastic Parallel: <a href='"+sectionSelector+"'>"+$(sectionSelector).attr("display")+"</a></span>"+$(sectionSelector).html());
+				$(this.htmlSectionSelector).html("<span id='parallelLink' data-corresp='#"+partnerId+"'>Parallel: <a href='"+sectionSelector+"'>"+$(sectionSelector).attr("display")+"</a></span>"+$(sectionSelector).html());
 				$(this.htmlSectionSelector).find('a[data-toggle="popover"]').remove();
 			} else {
-				$(this.htmlSectionSelector).html("<span id='parallelLink'>Chiastic Parallel: None</span>");
+				$(this.htmlSectionSelector).html("<span id='parallelLink'>Parallel: none</span>");
 			}
 		}
 	},

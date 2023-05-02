@@ -219,52 +219,6 @@ hr {
   border-radius: 0 0 15px 15px;
 }
 
-/*Prompt Panel*/
-/*#prompt-selection label {
-  cursor: pointer; 
-  display: block; 
-}
-
-
-#prompts > .subheader {
-  font-size: 10pt;
-  padding-top: 0.5em;
-  padding-bottom: 1em;
-  line-height: 1.2em;
-  position: sticky;
-  top: 28px;
-  z-index: 50;
-  background-color: white;
-}
-
-.prompt-title, .prompt-section-title, .prompt-section, .prompt-author, .prompt-citation {
-  display: block;
-}
-.prompt-title {
-  margin-top: 1em;
-  font-size: 14pt;
-}
-
-.prompt-author {
-  font-size: 10pt;
-  color: gray;
-  margin-bottom: 1em;
-}
-
-.prompt-section {
-  margin-bottom: 1em;
-}
-
-.prompt-section-quote {
-  margin: 0 1em 1em 1em;
-}
-
-.prompt-citation {
-  text-indent: -2em; 
-  margin: 0 0 .5em 2em;
-  font-size: 10pt;
-}*/
-
 /*Interp Panel*/
 
 .interp:hover{
@@ -371,22 +325,13 @@ hr {
 }
 
 
-/*Comment Panel*/
-/*#comment {
-  display: none;
-}
-
-#comment .content {
-  line-height: 1.5em;
-}*/
-
-
 /*TEI*/
 #TEI, #parallel, #outline {
   padding: 10px 50px 10px 50px;
   width: calc(100% - 100px);
   background-color:  white;
   position: relative;
+  font-family:'Times New Roman', Times, serif;
 }
 
 #parallel {
@@ -443,7 +388,7 @@ tei-div.active, #outlineHtml p.active {
 
 .chiastic-view tei-TEI tei-label, #parallelPanel.chiastic-view tei-label {
   font-style: italic;
-  display: block;
+  display: none;
 }
 
 #parallelHtml #parallelLink {
@@ -452,6 +397,37 @@ tei-div.active, #outlineHtml p.active {
   font-weight: normal;
   font-size: 120%;
   margin-top: .5rem;
+}
+
+/*** SECTION TITLES ***/
+
+.chiastic-view tei-div[type='section'] .sectionTitle {
+  display: block;
+  color: teal;
+  font-family: Arvo, sans-serif;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.chiastic-view tei-div[type='section'] tei-div[type='section'] .sectionTitle {
+  font-weight: normal;
+}
+
+.chiastic-view tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] .sectionTitle {
+  font-size: 100%;
+  
+}
+
+.chiastic-view tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] .sectionTitle {
+  font-style: italic;
+}
+
+.chiastic-view tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] .sectionTitle {
+  font-size: 80%;
+}
+
+.chapter-view .sectionTitle {
+  display: none;
 }
 
 
