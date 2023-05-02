@@ -420,7 +420,7 @@ tei-div.active, #outlineHtml p.active {
   margin-top: .5rem;
 }
 
-.chiastic-view tei-div[type="parallel"]:before { 
+.chiastic-view tei-div[type="section"][corresp]:before { 
   display: block;
   font-family: Arvo, sans-serif;
   font-weight: normal;
@@ -429,15 +429,15 @@ tei-div.active, #outlineHtml p.active {
   content: attr(display); 
 }
 
-.chiastic-view tei-div[type="parallel"]  {
+.chiastic-view tei-div[type="section"][corresp]  {
   display: block;
 }
 
-.chiastic-view tei-div[type="parallel"] tei-div[type="parallel"]:before { 
+.chiastic-view tei-div[type="section"][corresp] tei-div[type="section"][corresp]:before { 
   font-size: 150%;
 }
 
-.chiastic-view tei-div[type="parallel"] tei-div[type="parallel"] {
+.chiastic-view tei-div[type="section"][corresp] tei-div[type="section"][corresp] {
   margin-left: 1rem;
 }
 

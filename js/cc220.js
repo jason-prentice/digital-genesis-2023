@@ -20,7 +20,7 @@ var setView = function(){
 	teiPanel.setVisibility();
 	parallelPanel.setMainView();
 	parallelPanel.setVisibility();
-	parallelPanel.setHtml();
+	parallelPanel.reset();
 	documentarySources.setVisibility();
 	outlinePanel.setVisibility();
 	tools.setVisibility();
@@ -62,7 +62,7 @@ var CETEI;
 if (CETEI) {
 	var CETEIcean = new CETEI()
 	//CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis/main/tei/gen-noah-flood-chiasm_main.xml", function(data) {
-	CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis-2023/main/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.xml", function(data) {
+	CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis-2023/main/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.3.xml", function(data) {
 	//CETEIcean.getHTML5("tei/gen-noah-flood-chiasm_main.xml", function(data) {
 		document.getElementById("TEI").appendChild(data);		
 		$('tei-anchor').wrap(function(){
@@ -77,8 +77,8 @@ if (CETEI) {
 			}
 			return false;
 		});  
-		$('tei-div[type="parallel"]').each(function(){
-			var newId = $(this).attr("xml\:id").replace("pr","'");
+		$('tei-div[type="section"][corresp]').each(function(){
+			var newId = $(this).attr("xml\:id").replace("pr","'").replace(/_/g, " ");
 			$(this).attr("display", newId);
 		});
 		themes.setHtml();
@@ -222,7 +222,7 @@ var teiPanel = {
 /*** TEI PARALLEL ***/
 
 var teiParallel = {
-	selector: "#TEI tei-div[type='parallel']",
+	selector: "#TEI tei-div[type='section'][corresp]",
 
 	handleMouseover: function(currentParallel) {
 		if(parallelPanel.getVisibility()){
@@ -237,8 +237,13 @@ var teiParallel = {
 	}
 };
 
-$(document).on("mouseover", teiParallel.selector, function() {
-		teiParallel.handleMouseover(this);
+var teiSection = {
+	selector: "#TEI tei-div[type='section']",
+};
+
+$(document).on("mouseover", teiSection.selector, function(event) {
+		var currentParallel = event.target.closest(teiParallel.selector);
+		teiParallel.handleMouseover(currentParallel);
 	});
 
 /*** OUTLINE PANEL ***/
@@ -288,7 +293,7 @@ var parallelPanel = {
 			$(this.selector).show();
 		} else {
 			$(this.selector).hide();
-			this.setHtml();
+			this.reset();
 			teiParallel.clearHighlighting();
 			outlinePanel.clearHighlighting();
 		}
@@ -305,7 +310,7 @@ var parallelPanel = {
 			return false;
 		}
 	},
-	setHtml: function(sectionSelector) {
+	reset: function() {
 		var selectedView = mainViewMode.getSelectedView();
 		if (this.compatibleViews.includes(selectedView)){
 			$(this.toggleSelector).show();
@@ -314,6 +319,10 @@ var parallelPanel = {
 			$(this.toggleSelector).hide();
 			$(this.toggleLabelSelector).hide();
 		}
+		$(this.htmlSectionSelector).html("<p class='small'><i>Hover over a section of the text to view its chiastic parallel in this panel.</i></p>");
+	},
+	setHtml: function(sectionSelector) {
+		var selectedView = mainViewMode.getSelectedView();
 		if(selectedView === "outline-view"){
 			$(this.toggleLabelSelector).text("Show section text");
 			if(sectionSelector) {
@@ -332,7 +341,7 @@ var parallelPanel = {
 				$(this.htmlSectionSelector).html("<span id='parallelLink' data-corresp='#"+partnerId+"'>Chiastic Parallel: <a href='"+sectionSelector+"'>"+$(sectionSelector).attr("display")+"</a></span>"+$(sectionSelector).html());
 				$(this.htmlSectionSelector).find('a[data-toggle="popover"]').remove();
 			} else {
-				$(this.htmlSectionSelector).html("<p class='small'><i>Hover over a section of the text to view its chiastic parallel in this panel.</i></p>");
+				$(this.htmlSectionSelector).html("<span id='parallelLink'>Chiastic Parallel: None</span>");
 			}
 		}
 	},
