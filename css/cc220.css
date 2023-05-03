@@ -331,6 +331,7 @@ hr {
   width: calc(100% - 100px);
   background-color:  white;
   position: relative;
+  font-size: 110%;
   font-family:'Times New Roman', Times, serif;
 }
 
@@ -386,9 +387,11 @@ tei-div.active, #outlineHtml p.active {
   margin-left: 1rem;
 }
 
-.chiastic-view tei-TEI tei-label, #parallelPanel.chiastic-view tei-label {
+.chiastic-view tei-TEI tei-label, #parallel.chiastic-view tei-label,
+.section-view tei-TEI tei-label, #parallel.section-view tei-label {
   font-style: italic;
-  display: none;
+  display: block;
+  margin-top: 1rem;
 }
 
 #parallelHtml #parallelLink {
@@ -401,32 +404,33 @@ tei-div.active, #outlineHtml p.active {
 
 /*** SECTION TITLES ***/
 
-.chiastic-view tei-div[type='section'] .sectionTitle {
+.sectionTitle {
   display: block;
-  color: teal;
   font-family: Arvo, sans-serif;
+}
+
+.sectionTitle[level='0'] {
   font-size: 150%;
   font-weight: bold;
 }
 
-.chiastic-view tei-div[type='section'] tei-div[type='section'] .sectionTitle {
+.sectionTitle[level='1'] {
+  font-size: 150%;
   font-weight: normal;
 }
 
-.chiastic-view tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] .sectionTitle {
+.sectionTitle[level='2'] {
+  font-size: 125%;
+  font-weight: normal;
+}
+
+.sectionTitle[level='3'] {
+  font-weight: bold;
   font-size: 100%;
-  
 }
 
-.chiastic-view tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] .sectionTitle {
-  font-style: italic;
-}
-
-.chiastic-view tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] tei-div[type='section'] .sectionTitle {
-  font-size: 80%;
-}
-
-.chapter-view .sectionTitle {
+.chapter-view .sectionTitle,
+.chiastic-view .sectionTitle {
   display: none;
 }
 

@@ -75,8 +75,8 @@ var CETEI;
 if (CETEI) {
 	var CETEIcean = new CETEI()
 	//CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis/main/tei/gen-noah-flood-chiasm_main.xml", function(data) {
-	CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis-2023/main/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.3.xml", function(data) {
-	//CETEIcean.getHTML5("tei/gen-noah-flood-chiasm_main.xml", function(data) {
+	//CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis-2023/main/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.5.xml", function(data) {
+	CETEIcean.getHTML5("tei/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.5.xml", function(data) {
 		document.getElementById("TEI").appendChild(data);		
 		$('tei-anchor').wrap(function(){
 			var ID = $(this).attr('id');
@@ -98,7 +98,8 @@ if (CETEI) {
 		$("tei-anchor").html("<sup><i class='far fa-comment-alt light'></i><sup>");
 		$('tei-div[ana]').each(function(){
 			var prettyAna = capitalizeTitle($(this).attr("ana"));
-			$(this).prepend("<span class='sectionTitle'>" + prettyAna + "</span>")
+			var level = $(this).parentsUntil($('tei-body'), 'tei-div[ana]').length;
+			$(this).prepend("<span class='sectionTitle' level='" + level + "'>" + prettyAna + "</span>")
 		})
 		prepareNotePopovers(teiPanel.selector);
 	});	
@@ -120,7 +121,7 @@ var mainViewMode = {
 		return selectedView;
 	},
 	getViews: function(){
-		return ["chapter-view","chiastic-view"];
+		return ["chapter-view","chiastic-view","section-view"];
 	}
 };
 
@@ -170,7 +171,7 @@ $(document).on("change", documentarySources.toggleSelector, function() {
 
 var teiPanel = {
 	selector: "#TEI",
-	compatibleViews: ["chapter-view", "chiastic-view"],
+	compatibleViews: ["chapter-view", "chiastic-view", "section-view"],
 	setMainView: function(){
 		var selector = this.selector;
 		var selectedView = mainViewMode.getSelectedView();
@@ -213,6 +214,10 @@ var teiParallel = {
 
 var teiSection = {
 	selector: "#TEI tei-div[type='section']",
+};
+
+var teiSectionTitle = {
+	selector: ".sectionTitle",
 };
 
 $(document).on("mouseover", teiSection.selector, function(event) {
@@ -260,7 +265,11 @@ var parallelPanel = {
 	parallelLinkSelector: "#parallelLink",
 	toggleSelector: "#parallel-toggle",
 	toggleLabelSelector: "label[for='parallel-toggle']",
-	compatibleViews: ["chapter-view", "chiastic-view", "outline-view"],
+	compatibleViews: ["chapter-view", "chiastic-view", "outline-view", "section-view"],
+	defaultHtml: {
+		contents: "<p class='small'><i>Hover over a section of the outline to view the full contents in this panel.</i></p>",
+		parallel: "<p class='small'><i>Hover over a section of the text to view its parallel in this panel.</i></p>"
+	},
 	setVisibility: function() {
 		if(this.getVisibility()){
 			$(this.selector).show();
@@ -292,12 +301,18 @@ var parallelPanel = {
 			$(this.toggleSelector).hide();
 			$(this.toggleLabelSelector).hide();
 		}
-		$(this.htmlSectionSelector).html("<p class='small'><i>Hover over a section of the text to view its parallel in this panel.</i></p>");
+		if(selectedView === "outline-view"){
+			$(this.toggleLabelSelector).text("Show section text");
+			$(this.htmlSectionSelector).html(this.defaultHtml.contents);
+		} else {
+			$(this.toggleLabelSelector).text("Show parallels");
+			$(this.htmlSectionSelector).html(this.defaultHtml.parallel);
+		}
 	},
 	setHtml: function(sectionSelector) {
 		var selectedView = mainViewMode.getSelectedView();
 		if(selectedView === "outline-view"){
-			$(this.toggleLabelSelector).text("Show section text");
+			//$(this.toggleLabelSelector).text("Show section text");
 			if(sectionSelector) {
 				var html = $(sectionSelector).html();
 
@@ -305,10 +320,10 @@ var parallelPanel = {
 				$(this.htmlSectionSelector).find('a[data-toggle="popover"]').remove();
 				
 			} else {
-				$(this.htmlSectionSelector).html("<p class='small'><i>Hover over a section of the outline to view the full contents in this panel.</i></p>");
+				$(this.htmlSectionSelector).html(this.defaultHtml.contents);
 			}
 		} else {
-			$(this.toggleLabelSelector).text("Show chiastic parallel");
+			//$(this.toggleLabelSelector).text("Show parallels");
 			if(sectionSelector){
 				var partnerId = $(teiParallel.selector+"[corresp='"+sectionSelector+"']").attr("id");
 				$(this.htmlSectionSelector).html("<span id='parallelLink' data-corresp='#"+partnerId+"'>Parallel: <a href='"+sectionSelector+"'>"+$(sectionSelector).attr("display")+"</a></span>"+$(sectionSelector).html());
@@ -346,7 +361,7 @@ var tools = {
 	toggleSelector:"#tools-toggle",
 	toggleLabelSelector:"#tools-toggle-label",
 	closeSelector: ".close[data-for='interp']",
-	compatibleViews: ["chapter-view", "chiastic-view", "outline-view"],
+	compatibleViews: ["chapter-view", "chiastic-view", "outline-view", "section-view"],
 	setVisibility: function(){
 		var selectedView = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
