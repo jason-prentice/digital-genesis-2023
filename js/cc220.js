@@ -1,4 +1,3 @@
-
 var getBeginningWords = function(text, count){
 	return text.split(/\s+/).slice(0,count).join(" ");
 };
@@ -30,14 +29,8 @@ var setView = function(){
 $(document).ready(function(){
 	$("#page").hide();
 	setView();
+	$("#text").removeClass("hidden");
 });
-
-function showPage(page){
-	var html = "includes/" + page + ".html";
-	$("#page").load(html);
-	$("#page").show();
-	$("#text").hide();
-};
 
 function capitalizeTitle(title) {
 	var lowercaseWords = ["the", "an", "a", "of", "for", "in", "under", "with", "on", "in"];
@@ -52,21 +45,6 @@ function capitalizeTitle(title) {
 }
 
 
-$(document).on("click", ".nav-item", function() {
-	$('.nav-item').removeClass('active');
-	$(this).addClass('active');
-	var section = $(this).attr('data-section');
-	if (["about","bibliography", "introduction"].indexOf(section) >= 0){
-			showPage(section);
-		} else {
-			$("#page").hide();
-			$("#text").show();
-			
-		}
-	
-});
-
-
 /*** CETEIcean ***/
 
 /*Convert a TEI document to HTML and insert into #TEI.*/
@@ -76,6 +54,7 @@ if (CETEI) {
 	var CETEIcean = new CETEI()
 	//CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis/main/tei/gen-noah-flood-chiasm_main.xml", function(data) {
 	//CETEIcean.getHTML5("https://raw.githubusercontent.com/jason-prentice/digital-genesis-2023/main/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.5.xml", function(data) {
+	console.log("get")
 	CETEIcean.getHTML5("tei/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.5.xml", function(data) {
 		document.getElementById("TEI").appendChild(data);		
 		$('tei-anchor').wrap(function(){
@@ -394,7 +373,7 @@ $( document ).on("click",".accordion", function() {
     var panel = $(this).next();
     var arrow = $(this).find('.arrow');
     if (panel.css('max-height')==="0px"){
-      var height = panel.prop('scrollHeight')+ "px";
+     // var height = panel.prop('scrollHeight')+ "px";
       panel.css('max-height',"800px");
       arrow.removeClass('fa-chevron-down');
       arrow.addClass('fa-chevron-up');

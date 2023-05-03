@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CC220 Digital Edition</title>
+  <title></title>
+  <meta name="description" content="">
   <link rel="stylesheet" href="css/jquery-ui.css" />
   <link rel="stylesheet" href="css/CETEIcean.css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -20,16 +21,16 @@
 <div id="navbar">
   <span id="nav-brand"><a href="">The Book of Genesis <span class="light small">Digital Edition Spring 2023</span></a></span> 
   <div id="nav-items">
-    <span class="nav-item" data-section="introduction">Introduction</span>
-    <span class="nav-item active" data-section="text">Text</span>
-    <span class="nav-item" data-section="bibliography">Bibliography</span>
-    <span class="nav-item" data-section="about">About</span>
+    <a class="nav-item" data-section="introduction" href="#/introduction">Introduction</a>
+    <a class="nav-item active" data-section="text" href="/">Text</a>
+    <a class="nav-item" data-section="bibliography" href="#/bibliography">Bibliography</a>
+    <a class="nav-item" data-section="about" href="#/about">About</a>
   </div>
 </div>
 
 <div id="main">
   <div id="page"></div>
-  <div id="text">
+  <div id="text" class="hidden">
     <div id="text-header">
      
         <div id="text-menu">
@@ -114,7 +115,7 @@
     </div>
   </div>
 </div>
- 
+<script src="/js/router.js"></script>
 </body>
 </html>
 

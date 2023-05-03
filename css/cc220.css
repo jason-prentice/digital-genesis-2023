@@ -113,6 +113,11 @@ hr {
   overflow-y: scroll;
 }
 
+/*Text*/
+#text.hidden {
+  visibility: hidden;
+}
+
 
 /*Text Header*/
 #text-header {
@@ -707,9 +712,6 @@ tei-div.active, #outlineHtml p.active {
 }
 
 /*OUTLINE*/
-.outline-level-1 {
- 
-}
 .outline-level-2 {
   padding-left: 1rem;
 }
