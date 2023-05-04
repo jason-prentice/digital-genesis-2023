@@ -54,7 +54,6 @@ const locationHandler = async () => {
     
         const route = routes[location] || routes["404"];
        
-        console.log(location)
         if (!["/", ""].includes(location)) {
             $("#page").load(route.content);
             $("#page").show();
@@ -73,7 +72,6 @@ const locationHandler = async () => {
         $(".nav-item[href='/'").addClass("active");
         $("#page").hide();
         $("#text").show(); 
-
         
         const element = document.getElementById(window.location.hash.replace("#",""));
         element.scrollIntoView();
