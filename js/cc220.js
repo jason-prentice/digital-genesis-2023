@@ -27,7 +27,9 @@ var setView = function(){
 }
 
 $(document).ready(function(){
-	$("#page").hide();
+	if (!window.location.hash) {
+		$("#page").hide();
+	}
 	setView();
 	$("#text").removeClass("hidden");
 });

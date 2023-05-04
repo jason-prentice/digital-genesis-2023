@@ -1,5 +1,12 @@
 const pageTitle = "Genesis Digital Edition";
 
+$(".nav-item").on("click", function(event) {
+	const { target } = event;
+    event.preventDefault();
+    handleRoute();
+});
+
+
 const routes = {
 	404: {
 		content: "includes/404.html",
@@ -23,47 +30,58 @@ const routes = {
 	},
     introduction: {
 		content: "includes/introduction.html",
-		title: "Bibliography | " + pageTitle,
+		title: "Introduction | " + pageTitle,
 		description: "This is the site introduction",
 	},
 };
 
+const handleRoute = (event) => {
+    event = event || window.event;
+    event.preventDefault();
+    window.history.pushState({}, "", event.target.href);
+    locationHandler();
+}
+
 const locationHandler = async () => {
-    console.log(window.location.hash)
-    if (window.location.hash.startsWith("#/")) {
-        console.log("page change")
+    
+    $(".nav-item").removeClass('active');
+    if (!window.location.hash || window.location.hash.startsWith("#/")) {
         var location = window.location.hash.replace("#/", "");
 
         if (location.length == 0) {
             location = "/";
         }
-        console.log(location)
     
         const route = routes[location] || routes["404"];
-        $(".nav-item").removeClass('active');
-        if (location !== "/") {
-            console.log("page")
-            //const html = await fetch(route.content).then((response) => response.text());
-            //document.getElementById("page").innerHTML = html;
+       
+        console.log(location)
+        if (!["/", ""].includes(location)) {
             $("#page").load(route.content);
             $("#page").show();
             $("#text").hide();
-            $(".nav-item[href='#" + location + "'").addClass("active");
+            $(".nav-item[href='#/" + location + "'").addClass("active");
         } else {
-            console.log(text)
             $(".nav-item[href='/'").addClass("active");
             $("#page").hide();
-            $("#text").show();
+            $("#text").show();  
         }
         document.title = route.title;
         document
             .querySelector('meta[name="description"]')
             .setAttribute("content", route.description);
+    } else {
+        $(".nav-item[href='/'").addClass("active");
+        $("#page").hide();
+        $("#text").show(); 
+
+        
+        const element = document.getElementById(window.location.hash.replace("#",""));
+        element.scrollIntoView();
     }
 	
 };
 
 window.addEventListener("hashchange", locationHandler);
-window.addEventListener("onload", locationHandler)
+window.onpopstate = locationHandler;
 
 locationHandler();
