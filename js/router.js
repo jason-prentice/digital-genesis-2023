@@ -1,4 +1,4 @@
-import { textContainer } from "../components/textContainer.js";
+import { textContainer } from "../components/text-container.js";
 
 const pageTitle = "Genesis Digital Edition";
 

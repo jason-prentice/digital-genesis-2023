@@ -1,4 +1,4 @@
-import { teiPanel } from "../components/teiPanel.js";
+import { teiPanel } from "../components/tei-panel.js";
 
 const prepareNotePopovers = function(selector){
 	$(function () {

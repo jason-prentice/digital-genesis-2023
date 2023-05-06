@@ -1,4 +1,4 @@
-import { parallelPanel } from "../components/parallelPanel.js";
+import { parallelPanel } from "./parallel-panel.js";
 
 export const teiParallel = {
 	selector: "#TEI tei-div[type='section'][corresp]",

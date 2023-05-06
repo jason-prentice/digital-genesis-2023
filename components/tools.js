@@ -1,4 +1,4 @@
-import { mainViewMode } from "../components/mainViewMode.js";
+import { mainViewMode } from "./main-view-mode.js";
 
 export const tools = {
 	selector: "#interp",

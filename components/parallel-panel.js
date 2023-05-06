@@ -1,6 +1,6 @@
-import { teiParallel } from "../components/teiParallel.js";
-import { mainViewMode } from "../components/mainViewMode.js";
-import { outlinePanel } from "../components/outlinePanel.js";
+import { teiParallel } from "./tei-parallel.js";
+import { mainViewMode } from "./main-view-mode.js";
+import { outlinePanel } from "./outline-panel.js";
 
 export const parallelPanel = {
 	selector: "#parallel",

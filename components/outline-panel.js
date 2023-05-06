@@ -1,5 +1,5 @@
-import { mainViewMode } from "../components/mainViewMode.js";
-import { parallelPanel } from "../components/parallelPanel.js";
+import { mainViewMode } from "./main-view-mode.js";
+import { parallelPanel } from "./parallel-panel.js";
 
 export const outlinePanel = {
 	selector: "#outline",

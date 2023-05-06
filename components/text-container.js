@@ -1,8 +1,8 @@
-import { documentarySources } from "./documentarySources.js";
-import { teiParallel } from "./teiParallel.js";
-import { outlinePanel } from "./outlinePanel.js";
-import { parallelPanel } from "./parallelPanel.js";
-import { teiPanel } from "./teiPanel.js";
+import { documentarySources } from "./documentary-sources.js";
+import { teiParallel } from "./tei-parallel.js";
+import { outlinePanel } from "./outline-panel.js";
+import { parallelPanel } from "./parallel-panel.js";
+import { teiPanel } from "./tei-panel.js";
 import { tools } from "./tools.js";
 
 export const textContainer = {

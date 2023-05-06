@@ -1,5 +1,5 @@
 
-import { textContainer } from "./textContainer.js";
+import { textContainer } from "./text-container.js";
 
 
 export const mainViewMode = {
