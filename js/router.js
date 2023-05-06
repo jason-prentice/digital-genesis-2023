@@ -1,3 +1,5 @@
+import { textContainer } from "../components/textContainer.js";
+
 const pageTitle = "Genesis Digital Edition";
 
 $(".nav-item").on("click", function(event) {
@@ -63,6 +65,8 @@ const locationHandler = async () => {
             $(".nav-item[href='/'").addClass("active");
             $("#page").hide();
             $("#text").show();  
+            textContainer.setView();
+            $("#text").removeClass("hidden");
         }
         document.title = route.title;
         document
@@ -72,9 +76,14 @@ const locationHandler = async () => {
         $(".nav-item[href='/'").addClass("active");
         $("#page").hide();
         $("#text").show(); 
+        textContainer.setView();
+        $("#text").removeClass("hidden");
+       
         
         const element = document.getElementById(window.location.hash.replace("#",""));
-        element.scrollIntoView();
+        if (element) {
+            element.scrollIntoView();
+        }
     }
 	
 };
