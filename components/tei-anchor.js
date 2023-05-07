@@ -3,13 +3,10 @@ export const teiAnchor = {
     addNoteIcon: function(){
         $(this.selector).html("<sup><i class='far fa-comment-alt light'></i><sup>");
     },
-    getNoteSelector: function(){
-        const id = $(this.selector).attr('id');
-        return `tei-note[target="#${id}"]`;
-    },
     prepareNoteContent: function(){
-        const noteSelector = this.getNoteSelector();
         $(this.selector).wrap(function(){
+            const id = $(this).attr('id');
+            const noteSelector = `tei-note[target="#${id}"]`;
             let html = $(noteSelector).find('[hidden]').html();
             if(html){
                 html = html.replace(/"/g, "&quot;");
@@ -18,6 +15,6 @@ export const teiAnchor = {
                 return `<a tabindex="0" data-toggle="popover" data-trigger="focus" data-content="${html}" />` ;
             }
             return false;
-        });      
+        });       
     }
 }
