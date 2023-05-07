@@ -8,7 +8,10 @@ import { tools } from "./tools.js";
 
 export const textContainer = {
     selector: '#text',
-    setView: function(){	
+    hide: function(){
+        $(this.selector).hide();
+    },
+    show: function(){	
         teiContainer.populate();
         teiParallel.clearHighlighting();
 	    outlinePanel.clearHighlighting();
@@ -20,5 +23,7 @@ export const textContainer = {
         documentarySources.setVisibility();
         outlinePanel.setVisibility();
         tools.setVisibility();
+        $(this.selector).removeClass("hidden");
+        $(this.selector).show();
     }
 }

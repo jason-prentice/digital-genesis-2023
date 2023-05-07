@@ -4,10 +4,8 @@ export const documentarySources = {
 	setVisibility: function(){
 		if(this.getVisibility()){
 			const sources = this.sources;
-			$(document).ready(function(){
-				sources.forEach(function(source){	
-					$(`tei-seg[ana='#${source}']`).addClass(`show-${source}`);
-				});
+			sources.forEach(function(source){	
+				$(`tei-seg[ana='#${source}']`).addClass(`show-${source}`);
 			});
 		} else {
 			this.sources.forEach(function(source){

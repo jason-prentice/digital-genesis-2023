@@ -67,7 +67,8 @@ export const parallelPanel = {
 		} else {
 			if(sectionSelector){
 				const partnerId = $(`${teiParallel.selector}[corresp='${sectionSelector}']`).attr("id");
-				$(this.htmlSectionSelector).html(`<span id='parallelLink' data-corresp='#${partnerId}'>Parallel: <a href='${sectionSelector}'>${$(sectionSelector).attr("display")}</a></span>${$(sectionSelector).html()}`);
+				const href = `#/text?parallel=${sectionSelector}`;
+				$(this.htmlSectionSelector).html(`<span id='parallelLink' data-corresp='#${partnerId}'>Parallel: <a href='${href}'>${$(sectionSelector).attr("display")}</a></span>${$(sectionSelector).html()}`);
 				$(this.htmlSectionSelector).find('a[data-toggle="popover"]').remove();
 			} else {
 				$(this.htmlSectionSelector).html("<span id='parallelLink'>Parallel: none</span>");

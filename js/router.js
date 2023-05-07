@@ -1,94 +1,118 @@
+import { menu } from "../components/menu.js";
+import { pageContainer } from "../components/page-container.js";
+import { parallelPanel } from "../components/parallel-panel.js";
+import { teiContainer } from "../components/tei-container.js";
 import { textContainer } from "../components/text-container.js";
 
 const pageTitle = "Genesis Digital Edition";
 
-$(".nav-item").on("click", function(event) {
-	const { target } = event;
-    event.preventDefault();
-    handleRoute();
-});
-
-
 const routes = {
 	404: {
 		content: "includes/404.html",
-		title: "404 | " + pageTitle,
+		title: `404 | ${pageTitle}`,
 		description: "Page not found",
 	},
 	"/": {
-		content: "includes/index.html",
-		title: "Home | " + pageTitle,
-		description: "The interactive Genesis text",
+		content: "includes/home.html",
+		title: `Home | ${pageTitle}`,
+		description: "The home page",
 	},
-	about: {
+	"#/about": {
 		content: "includes/about.html",
-		title: "About Us | " + pageTitle,
+		title: `About Us | ${pageTitle}`,
 		description: "This is the about page",
 	},
-	bibliography: {
+	"#/bibliography": {
 		content: "includes/bibliography.html",
-		title: "Bibliography | " + pageTitle,
+		title: `Bibliography | ${pageTitle}`,
 		description: "This is the project bibliography",
 	},
-    introduction: {
+    "#/introduction": {
 		content: "includes/introduction.html",
-		title: "Introduction | " + pageTitle,
+		title: `Introduction | ${pageTitle}`,
 		description: "This is the site introduction",
 	},
+    "#/text": {
+        title: `Text | ${pageTitle}`,
+        description: "The interactive digital text"
+    }
 };
 
-const handleRoute = (event) => {
-    event = event || window.event;
+$(menu.navItemSelector).on("click", function(event) {
     event.preventDefault();
     window.history.pushState({}, "", event.target.href);
     locationHandler();
+});
+
+$(`${parallelPanel.parallelLinkSelector} a`).on("click", function(event) {
+    event.preventDefault();
+    window.history.pushState({}, "", event.target.href);
+    locationHandler();
+});
+
+const deconstructHash = hash => {
+   
+    if (!hash || hash === "/" || !hash.startsWith("#/")) {
+        return {
+            path: "/"
+        };
+    }
+    
+    const segments = hash.split("?");
+   
+    const path = segments[0];
+    if (segments.length !== 2) {
+        return {
+            path
+        }
+    }
+    
+    return {
+        path, 
+        params: new URLSearchParams(segments[1])
+    };
 }
 
 const locationHandler = async () => {
-    
-    $(".nav-item").removeClass('active');
-    if (!window.location.hash || window.location.hash.startsWith("#/")) {
-        var location = window.location.hash.replace("#/", "");
+    menu.clearActiveItem();
+   
 
-        if (location.length == 0) {
-            location = "/";
-        }
-    
-        const route = routes[location] || routes["404"];
-       
-        if (!["/", ""].includes(location)) {
-            $("#page").load(route.content);
-            $("#page").show();
-            $("#text").hide();
-            $(".nav-item[href='#/" + location + "'").addClass("active");
-        } else {
-            $(".nav-item[href='/'").addClass("active");
-            $("#page").hide();
-            $("#text").show();  
-            textContainer.setView();
-            $("#text").removeClass("hidden");
-        }
-        document.title = route.title;
-        document
-            .querySelector('meta[name="description"]')
-            .setAttribute("content", route.description);
+    const { path, params } = deconstructHash(window.location.hash);
+    if (window.location.hash.length == 0) {
+        menu.makeItemActive(`${menu.navItemSelector}[href='/']`);
     } else {
-        $(".nav-item[href='/'").addClass("active");
-        $("#page").hide();
-        $("#text").show(); 
-        textContainer.setView();
-        $("#text").removeClass("hidden");
-       
-        
-        const element = document.getElementById(window.location.hash.replace("#",""));
-        if (element) {
-            element.scrollIntoView();
-        }
+        menu.makeItemActive(`${menu.navItemSelector}[href='${path}']`);
     }
+
+    const route = routes[path] || routes["404"];
+
+    if (path !== "#/text") {
+        pageContainer.show(route.content);
+        textContainer.hide();
+    } else {
+        pageContainer.hide();
+        textContainer.show();
+
+        if (params) {
+            const requestedParallel = params.get('parallel');
+            const element = document.getElementById(requestedParallel.replace("#",""));
+            if (element) {
+                element.scrollIntoView();
+            } else {
+                $(teiContainer.selector).scrollTop(0);
+            }
+        } else {
+            $(teiContainer.selector).scrollTop(0);
+        }
+        
+    }
+    document.title = route.title;
+    document
+        .querySelector('meta[name="description"]')
+        .setAttribute("content", route.description);
 	
 };
 
-window.addEventListener("hashchange", locationHandler);
 window.onpopstate = locationHandler;
 
 locationHandler();

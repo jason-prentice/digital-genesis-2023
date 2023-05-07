@@ -21,5 +21,5 @@ export const mainViewMode = {
 };
 
 $(document).on("change", mainViewMode.selector, function() {
-	textContainer.setView();
+	textContainer.show();
 });
