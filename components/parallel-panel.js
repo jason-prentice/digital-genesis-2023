@@ -2,7 +2,7 @@ import { locationHandler } from "../helpers/location-handler.js";
 import { teiParallel } from "./tei-parallel.js";
 import { mainViewMode } from "./main-view-mode.js";
 import { outlinePanel } from "./outline-panel.js";
-import { updateParam, deleteParam } from "../helpers/manage-params.js";
+import { updateParam, deleteParam } from "../helpers/hash-utils.js";
 
 export const parallelPanel = {
 	selector: "#parallel",
@@ -97,23 +97,14 @@ $(document).on("change", parallelPanel.toggleSelector, function() {
 $(document).on("click", parallelPanel.parallelLinkSelector , function(event) {
 	parallelPanel.setHtml($(parallelPanel.parallelLinkSelector).attr("data-corresp"));
     event.preventDefault();
-	// const { path, params } = deconstructHash(window.location.hash);
-	// if (params) {
-	// 	params.delete("parallel");
-	// }
-	 const currentTarget = event.currentTarget;
-	 const parallel = currentTarget.getAttribute("data-section");
-	// if (parallel) {
-	// 	params.append("parallel", parallel.replace("#",""));
-	// }
-	// const href = `${path}?${params.toString()}`;
+	const parallel = event.currentTarget.getAttribute("data-section");
+	
 	let href;
 	if (parallel) {
 		href = updateParam("parallel", parallel.replace("#",""));
 	} else {
 		href = deleteParam("parallel");
 	}
-	 
 	
     window.history.pushState({}, "", href);
     locationHandler();

@@ -4,6 +4,7 @@ import { teiParallel } from "./tei-parallel.js";
 import { teiSection } from "./tei-section.js"
 import { popover } from "./popover.js";
 import { verseNumber } from "./verse-number.js";
+import { deconstructHash } from "../helpers/hash-utils.js";
 
 export const teiContainer = {
     selector: "#TEI",
@@ -21,10 +22,26 @@ export const teiContainer = {
 				transformOutput();
 			});	
 	   }
-		
-	
+	   scrollToRequestedParallel();
     }
 }
+
+const scrollToRequestedParallel = () => {
+	const { params } = deconstructHash();
+	if (params) {
+		const requestedParallel = params.get('parallel');
+		if (requestedParallel) {
+			const element = document.getElementById(requestedParallel.replace("#",""));
+			if (element) {
+				element.scrollIntoView();
+			} else {
+				$(teiContainer.selector).scrollTop(0);
+			}
+		}
+	} else {
+		$(teiContainer.selector).scrollTop(0);
+	}
+};
 
 const transformOutput = () => {
 	teiAnchor.addNoteIcon();
@@ -33,7 +50,7 @@ const transformOutput = () => {
 	verseNumber.makeSuperscript();
 	teiSection.addSectionTitles();
 	popover.prepare();
-}
+};
 
 
 

@@ -1,4 +1,4 @@
-import { deconstructHash } from "./deconstruct-hash.js";
+import { deconstructHash } from "./hash-utils.js";
 import { menu } from "../components/menu.js";
 import { pageContainer } from "../components/page-container.js";
 import { teiContainer } from "../components/tei-container.js";
@@ -42,7 +42,7 @@ export const locationHandler = async () => {
     menu.clearActiveItem();
     
 
-    const { path, params } = deconstructHash(window.location.hash);
+    const { path, params } = deconstructHash();
     if (window.location.hash.length == 0) {
         menu.makeItemActive(`${menu.navItemSelector}[href='/']`);
     } else {
@@ -56,23 +56,7 @@ export const locationHandler = async () => {
         textContainer.hide();
     } else {
         pageContainer.hide();
-        textContainer.show();
-
-        if (params) {
-            const requestedParallel = params.get('parallel');
-            if (requestedParallel) {
-                const element = document.getElementById(requestedParallel.replace("#",""));
-                if (element) {
-                    element.scrollIntoView();
-                } else {
-                    $(teiContainer.selector).scrollTop(0);
-                }
-            }
-                
-        } else {
-            $(teiContainer.selector).scrollTop(0);
-        }
-        
+        textContainer.show(params);
     }
     document.title = route.title;
     document
