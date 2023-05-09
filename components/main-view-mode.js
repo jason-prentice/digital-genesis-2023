@@ -1,18 +1,17 @@
 
-import { updateParam, deleteParam, getParamValue } from "../helpers/hash-utils.js";
+import { getHref, addParam, deleteParam, getParamValue } from "../helpers/hash-utils.js";
 import { locationHandler } from "../helpers/location-handler.js";
 
 
 export const mainViewMode = {
 	selector: 'input[name="view"]',
 	setSelectedView: function(selectedView){
-		let href = updateParam("view", selectedView);
-		// console.log (`href ${href}`)
+		let modifications = [{func: addParam, param: "view", value: selectedView}];
 
-		// if(selectedView === "outline-view") {
-		// 	href = deleteParam("parallel");
-		// }
-		// console.log (`href ${href}`)
+		if(selectedView === "outline-view") {
+			modifications.push({func: deleteParam, param: "parallel"});
+		}
+		const href = getHref(modifications);
 
 		window.history.pushState({}, "", href);
     	locationHandler();

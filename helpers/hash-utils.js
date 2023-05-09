@@ -26,24 +26,35 @@ export const deconstructHash = () => {
 };
 
 export const getParamValue = (param) => {
-    const { path, params } = deconstructHash();
+    const { params } = deconstructHash();
     return params.get(param);
 }
 
 
-export const updateParam = (paramToUpdate, value, replace = true) => {
-    const { path, params } = deconstructHash();
-    if (replace && params) {
-        params.delete(paramToUpdate);
+export const addParam = (params, paramToAdd, value) => {
+
+    if (params) {
+        params.delete(paramToAdd);
     }
-    params.append(paramToUpdate, value);
-    return `${path}?${params.toString()}`;
+    params.append(paramToAdd, value);
+    return params;
 }
 
-export const deleteParam = (paramToDelete) => {
-    const { path, params } = deconstructHash();
+export const deleteParam = (params, paramToDelete) => {
     if (params) {
         params.delete(paramToDelete);
     }
+    return params;
+}
+ 
+export const getHref = modifications => {
+    let { path, params } = deconstructHash();
+    if (modifications) {
+        modifications.forEach(modification => {
+            const { func, param, value } = modification;
+            params = func(params, param, value);
+        });
+    }
+    
     return `${path}?${params.toString()}`;
 }

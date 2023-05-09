@@ -2,7 +2,7 @@ import { locationHandler } from "../helpers/location-handler.js";
 import { teiParallel } from "./tei-parallel.js";
 import { mainViewMode } from "./main-view-mode.js";
 import { outlinePanel } from "./outline-panel.js";
-import { updateParam, deleteParam } from "../helpers/hash-utils.js";
+import { getHref, addParam, deleteParam } from "../helpers/hash-utils.js";
 
 export const parallelPanel = {
 	selector: "#parallel",
@@ -101,9 +101,9 @@ $(document).on("click", parallelPanel.parallelLinkSelector , function(event) {
 	
 	let href;
 	if (parallel) {
-		href = updateParam("parallel", parallel.replace("#",""));
+		href = getHref([{func: addParam, param: "parallel", value: parallel.replace("#","")}]);
 	} else {
-		href = deleteParam("parallel");
+		href = getHref([{func: deleteParam, param: "parallel"}]);
 	}
 	
     window.history.pushState({}, "", href);
