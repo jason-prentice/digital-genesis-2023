@@ -1,4 +1,5 @@
 import CETEI from "../dependencies/CETEI.js";
+import { mainViewMode } from "./main-view-mode.js";
 import { teiAnchor } from "./tei-anchor.js";
 import { teiParallel } from "./tei-parallel.js";
 import { teiSection } from "./tei-section.js"

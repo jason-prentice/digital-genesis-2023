@@ -25,6 +25,12 @@ export const deconstructHash = () => {
     };
 };
 
+export const getParamValue = (param) => {
+    const { path, params } = deconstructHash();
+    return params.get(param);
+}
+
+
 export const updateParam = (paramToUpdate, value, replace = true) => {
     const { path, params } = deconstructHash();
     if (replace && params) {

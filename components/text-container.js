@@ -1,4 +1,5 @@
 import { documentarySources } from "./documentary-sources.js";
+import { mainViewMode } from "./main-view-mode.js";
 import { teiContainer } from "./tei-container.js";
 import { teiParallel } from "./tei-parallel.js";
 import { outlinePanel } from "./outline-panel.js";
@@ -11,7 +12,8 @@ export const textContainer = {
     hide: function(){
         $(this.selector).hide();
     },
-    show: function(){	
+    show: function(){
+        mainViewMode.showSelectedView();	
         teiContainer.populate();
         teiParallel.clearHighlighting();
 	    outlinePanel.clearHighlighting();
