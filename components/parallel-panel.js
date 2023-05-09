@@ -3,6 +3,7 @@ import { teiParallel } from "./tei-parallel.js";
 import { mainViewMode } from "./main-view-mode.js";
 import { outlinePanel } from "./outline-panel.js";
 import { getHref, addParam, deleteParam } from "../helpers/hash-utils.js";
+import { CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, PARALLEL_PARAM, SECTION_VIEW } from "../helpers/constants.js";
 
 export const parallelPanel = {
 	selector: "#parallel",
@@ -10,7 +11,7 @@ export const parallelPanel = {
 	parallelLinkSelector: "#parallelLink",
 	toggleSelector: "#parallel-toggle",
 	toggleLabelSelector: "label[for='parallel-toggle']",
-	compatibleViews: ["chapter-view", "chiastic-view", "outline-view", "section-view"],
+	compatibleViews: [CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, SECTION_VIEW],
 	defaultHtml: {
 		contents: "<p class='small'><i>Hover over a section of the outline to view the full contents in this panel.</i></p>",
 		parallel: "<p class='small'><i>Hover over a section of the text to view its parallel in this panel.</i></p>"
@@ -46,7 +47,7 @@ export const parallelPanel = {
 			$(this.toggleSelector).hide();
 			$(this.toggleLabelSelector).hide();
 		}
-		if(selectedView === "outline-view"){
+		if(selectedView === OUTLINE_VIEW){
 			$(this.toggleLabelSelector).text("Show section text");
 			$(this.htmlSectionSelector).html(this.defaultHtml.contents);
 		} else {
@@ -56,7 +57,7 @@ export const parallelPanel = {
 	},
 	setHtml: function(sectionSelector) {
 		const selectedView = mainViewMode.getSelectedView();
-		if(selectedView === "outline-view"){
+		if(selectedView === OUTLINE_VIEW){
 			if(sectionSelector) {
 				const html = $(sectionSelector).html();
 
@@ -101,9 +102,9 @@ $(document).on("click", parallelPanel.parallelLinkSelector , function(event) {
 	
 	let href;
 	if (parallel) {
-		href = getHref([{func: addParam, param: "parallel", value: parallel.replace("#","")}]);
+		href = getHref([{func: addParam, param: PARALLEL_PARAM, value: parallel.replace("#","")}]);
 	} else {
-		href = getHref([{func: deleteParam, param: "parallel"}]);
+		href = getHref([{func: deleteParam, param: PARALLEL_PARAM}]);
 	}
 	
     window.history.pushState({}, "", href);

@@ -4,7 +4,6 @@ import { teiContainer } from "./tei-container.js";
 import { teiParallel } from "./tei-parallel.js";
 import { outlinePanel } from "./outline-panel.js";
 import { parallelPanel } from "./parallel-panel.js";
-import { teiPanel } from "./tei-panel.js";
 import { tools } from "./tools.js";
 
 export const textContainer = {
@@ -17,8 +16,8 @@ export const textContainer = {
         teiContainer.populate();
         teiParallel.clearHighlighting();
 	    outlinePanel.clearHighlighting();
-        teiPanel.setMainView();
-        teiPanel.setVisibility();
+        teiContainer.setMainView();
+        teiContainer.setVisibility();
         parallelPanel.setMainView();
         parallelPanel.setVisibility();
         parallelPanel.reset();

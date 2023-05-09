@@ -1,3 +1,4 @@
+import { OUTLINE_VIEW } from "../helpers/constants.js";
 import { mainViewMode } from "./main-view-mode.js";
 import { parallelPanel } from "./parallel-panel.js";
 
@@ -5,7 +6,7 @@ export const outlinePanel = {
 	selector: "#outline",
 	outlineLinkSelector: "#outline .outline-link",
 	htmlSectionSelector: "#outlineHtml",
-	compatibleViews: ["outline-view"],
+	compatibleViews: [OUTLINE_VIEW],
 	setVisibility: function(){
 		const selectedView = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){

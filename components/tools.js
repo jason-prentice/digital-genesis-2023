@@ -1,3 +1,4 @@
+import { CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, SECTION_VIEW } from "../helpers/constants.js";
 import { mainViewMode } from "./main-view-mode.js";
 
 export const tools = {
@@ -5,7 +6,7 @@ export const tools = {
 	toggleSelector:"#tools-toggle",
 	toggleLabelSelector:"#tools-toggle-label",
 	closeSelector: ".close[data-for='interp']",
-	compatibleViews: ["chapter-view", "chiastic-view", "outline-view", "section-view"],
+	compatibleViews: [CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, SECTION_VIEW],
 	setVisibility: function(){
 		const selectedView = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){

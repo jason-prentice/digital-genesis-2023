@@ -1,4 +1,4 @@
-
+import { CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, PARALLEL_PARAM, SECTION_VIEW, VIEW_PARAM } from "../helpers/constants.js";
 import { getHref, addParam, deleteParam, getParamValue } from "../helpers/hash-utils.js";
 import { locationHandler } from "../helpers/location-handler.js";
 
@@ -6,10 +6,10 @@ import { locationHandler } from "../helpers/location-handler.js";
 export const mainViewMode = {
 	selector: 'input[name="view"]',
 	setSelectedView: function(selectedView){
-		let modifications = [{func: addParam, param: "view", value: selectedView}];
+		let modifications = [{func: addParam, param: VIEW_PARAM, value: selectedView}];
 
-		if(selectedView === "outline-view") {
-			modifications.push({func: deleteParam, param: "parallel"});
+		if(selectedView === OUTLINE_VIEW) {
+			modifications.push({func: deleteParam, param: PARALLEL_PARAM});
 		}
 		const href = getHref(modifications);
 
@@ -22,15 +22,15 @@ export const mainViewMode = {
 
 	},
 	getSelectedView: function(){
-		let selectedView = getParamValue("view");
+		let selectedView = getParamValue(VIEW_PARAM);
 		if (!selectedView || !this.getViews().includes(selectedView)) { 
-			selectedView = "chapter-view";
+			selectedView = CHAPTER_VIEW;
 			this.setSelectedView(selectedView);
 		};
 		return selectedView;
 	},
 	getViews: function(){
-		return ["chapter-view","chiastic-view","section-view","outline-view"];
+		return [CHAPTER_VIEW, CHIASTIC_VIEW, SECTION_VIEW, OUTLINE_VIEW];
 	}
 };
 
