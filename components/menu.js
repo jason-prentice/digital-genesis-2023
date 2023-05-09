@@ -1,3 +1,5 @@
+import { locationHandler } from "../helpers/location-handler.js";
+
 export const menu = {
     navItemSelector: ".nav-item",
     activeClass: "active",
@@ -8,3 +10,9 @@ export const menu = {
         $(this.navItemSelector).removeClass(this.activeClass);
     }
 };
+
+$(menu.navItemSelector).on("click", function(event) {
+    event.preventDefault();
+    window.history.pushState({}, "", event.target.href);
+    locationHandler();
+});

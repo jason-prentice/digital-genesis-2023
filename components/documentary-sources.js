@@ -2,7 +2,7 @@ export const documentarySources = {
 	toggleSelector: "#sources-toggle",
 	sources: ["yahwist","priestly"],
 	setVisibility: function(){
-		if(this.getVisibility()){
+		if(this.shouldBeVisible()){
 			const sources = this.sources;
 			sources.forEach(function(source){	
 				$(`tei-seg[ana='#${source}']`).addClass(`show-${source}`);
@@ -14,7 +14,7 @@ export const documentarySources = {
 			
 		}
 	},
-	getVisibility: function() {
+	shouldBeVisible: function() {
 		if($(this.toggleSelector).is(':checked')){
 			return true;
 		} else {

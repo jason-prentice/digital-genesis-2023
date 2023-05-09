@@ -1,6 +1,8 @@
+import { locationHandler } from "../helpers/location-handler.js";
 import { teiParallel } from "./tei-parallel.js";
 import { mainViewMode } from "./main-view-mode.js";
 import { outlinePanel } from "./outline-panel.js";
+import { updateParam, deleteParam } from "../helpers/manage-params.js";
 
 export const parallelPanel = {
 	selector: "#parallel",
@@ -14,7 +16,7 @@ export const parallelPanel = {
 		parallel: "<p class='small'><i>Hover over a section of the text to view its parallel in this panel.</i></p>"
 	},
 	setVisibility: function() {
-		if(this.getVisibility(mainViewMode)){
+		if(this.shouldBeVisible(mainViewMode)){
 			$(this.selector).show();
 		} else {
 			$(this.selector).hide();
@@ -23,7 +25,7 @@ export const parallelPanel = {
 			outlinePanel.clearHighlighting();
 		}
 	},
-	getVisibility: function() {
+	shouldBeVisible: function() {
 		const selectedView = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
 			if($(this.toggleSelector).is(':checked')){
@@ -67,8 +69,8 @@ export const parallelPanel = {
 		} else {
 			if(sectionSelector){
 				const partnerId = $(`${teiParallel.selector}[corresp='${sectionSelector}']`).attr("id");
-				const href = `#/text?parallel=${sectionSelector}`;
-				$(this.htmlSectionSelector).html(`<span id='parallelLink' data-corresp='#${partnerId}'>Parallel: <a href='${href}'>${$(sectionSelector).attr("display")}</a></span>${$(sectionSelector).html()}`);
+				
+				$(this.htmlSectionSelector).html(`<span id='parallelLink' data-section='${sectionSelector}' data-corresp='#${partnerId}'>Parallel: <a href='#'>${$(sectionSelector).attr("display")}</a></span>${$(sectionSelector).html()}`);
 				$(this.htmlSectionSelector).find('a[data-toggle="popover"]').remove();
 			} else {
 				$(this.htmlSectionSelector).html("<span id='parallelLink'>Parallel: none</span>");
@@ -90,8 +92,29 @@ export const parallelPanel = {
 
 $(document).on("change", parallelPanel.toggleSelector, function() {
 	parallelPanel.setVisibility();
-})*
+})
 
-$(document).on("click", parallelPanel.parallelLinkSelector, function() {
+$(document).on("click", parallelPanel.parallelLinkSelector , function(event) {
 	parallelPanel.setHtml($(parallelPanel.parallelLinkSelector).attr("data-corresp"));
+    event.preventDefault();
+	// const { path, params } = deconstructHash(window.location.hash);
+	// if (params) {
+	// 	params.delete("parallel");
+	// }
+	 const currentTarget = event.currentTarget;
+	 const parallel = currentTarget.getAttribute("data-section");
+	// if (parallel) {
+	// 	params.append("parallel", parallel.replace("#",""));
+	// }
+	// const href = `${path}?${params.toString()}`;
+	let href;
+	if (parallel) {
+		href = updateParam("parallel", parallel.replace("#",""));
+	} else {
+		href = deleteParam("parallel");
+	}
+	 
+	
+    window.history.pushState({}, "", href);
+    locationHandler();
 });

@@ -1,4 +1,4 @@
-import { capitalizeTitle } from "../js/capitalize-title.js";
+import { capitalizeTitle } from "../helpers/capitalize-title.js";
 import { teiParallel } from "./tei-parallel.js";
 
 export const teiSection = {

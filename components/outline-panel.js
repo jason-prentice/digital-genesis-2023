@@ -15,7 +15,7 @@ export const outlinePanel = {
 		}
 	},
 	handleMouseover: function(currentOutlineLink){
-		if(parallelPanel.getVisibility()){
+		if(parallelPanel.shouldBeVisible()){
 			this.clearHighlighting();
 			$(currentOutlineLink).addClass("active");
 			const parallelSelector = $(currentOutlineLink).attr("data-parallel");

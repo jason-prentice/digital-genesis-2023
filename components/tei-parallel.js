@@ -9,7 +9,7 @@ export const teiParallel = {
 		});
 	},
 	handleMouseover: function(currentParallel) {
-		if(parallelPanel.getVisibility()){
+		if(parallelPanel.shouldBeVisible()){
 			this.clearHighlighting();
 			$(currentParallel).addClass("active");
 			const correspSelector = $(currentParallel).attr("corresp");

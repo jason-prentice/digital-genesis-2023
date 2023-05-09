@@ -1,6 +1,6 @@
+import { deconstructHash } from "./deconstruct-hash.js";
 import { menu } from "../components/menu.js";
 import { pageContainer } from "../components/page-container.js";
-import { parallelPanel } from "../components/parallel-panel.js";
 import { teiContainer } from "../components/tei-container.js";
 import { textContainer } from "../components/text-container.js";
 
@@ -38,44 +38,9 @@ const routes = {
     }
 };
 
-$(menu.navItemSelector).on("click", function(event) {
-    event.preventDefault();
-    window.history.pushState({}, "", event.target.href);
-    locationHandler();
-});
-
-$(`${parallelPanel.parallelLinkSelector} a`).on("click", function(event) {
-    event.preventDefault();
-    window.history.pushState({}, "", event.target.href);
-    locationHandler();
-});
-
-const deconstructHash = hash => {
-   
-    if (!hash || hash === "/" || !hash.startsWith("#/")) {
-        return {
-            path: "/"
-        };
-    }
-    
-    const segments = hash.split("?");
-   
-    const path = segments[0];
-    if (segments.length !== 2) {
-        return {
-            path
-        }
-    }
-    
-    return {
-        path, 
-        params: new URLSearchParams(segments[1])
-    };
-}
-
-const locationHandler = async () => {
+export const locationHandler = async () => {
     menu.clearActiveItem();
-   
+    
 
     const { path, params } = deconstructHash(window.location.hash);
     if (window.location.hash.length == 0) {
@@ -95,12 +60,15 @@ const locationHandler = async () => {
 
         if (params) {
             const requestedParallel = params.get('parallel');
-            const element = document.getElementById(requestedParallel.replace("#",""));
-            if (element) {
-                element.scrollIntoView();
-            } else {
-                $(teiContainer.selector).scrollTop(0);
+            if (requestedParallel) {
+                const element = document.getElementById(requestedParallel.replace("#",""));
+                if (element) {
+                    element.scrollIntoView();
+                } else {
+                    $(teiContainer.selector).scrollTop(0);
+                }
             }
+                
         } else {
             $(teiContainer.selector).scrollTop(0);
         }
@@ -110,9 +78,5 @@ const locationHandler = async () => {
     document
         .querySelector('meta[name="description"]')
         .setAttribute("content", route.description);
-	
+    
 };
-
-window.onpopstate = locationHandler;
-
-locationHandler();
