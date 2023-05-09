@@ -1,7 +1,6 @@
 import { deconstructHash } from "./hash-utils.js";
 import { menu } from "../components/menu.js";
 import { pageContainer } from "../components/page-container.js";
-import { teiContainer } from "../components/tei-container.js";
 import { textContainer } from "../components/text-container.js";
 
 const pageTitle = "Genesis Digital Edition";

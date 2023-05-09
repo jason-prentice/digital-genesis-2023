@@ -340,6 +340,11 @@ hr {
   font-family:'Times New Roman', Times, serif;
 }
 
+#TEI a {
+  font-family: Helvetica;
+  font-size: 80%;
+}
+
 #parallel {
   line-height: 1.5;
   padding: 0px 30px 10px 30px;

@@ -28,14 +28,15 @@ export const teiContainer = {
 			const selector = this.selector;
 			CETEIcean.getHTML5(selectedTei, function(data) {
 				//Add CETEIcean output to teiContainer
-				$(selector).html(data);		
+				$(`${selector} div`).html(data);	
+				$(`${selector} a`).attr("href", selectedTei);	
 				transformOutput();
 				scrollToRequestedParallel();
 			});	
 	    } else {
 		
 			$(document).ready(function() {
-			scrollToRequestedParallel();	
+				scrollToRequestedParallel();	
 			});
 		}
 	   
