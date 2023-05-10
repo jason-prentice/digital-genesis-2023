@@ -3,8 +3,9 @@ import { locationHandler } from "../helpers/location-handler.js";
 export const menu = {
     navItemSelector: ".nav-item",
     activeClass: "active",
-    makeItemActive: function(currentItem) {
-        $(currentItem).addClass(this.activeClass);
+    makeItemActive: function(path) {
+        const currentItemSelector = `${menu.navItemSelector}[href='${path}']`;
+        $(currentItemSelector).addClass(this.activeClass);
     },
     clearActiveItem: function() {
         $(this.navItemSelector).removeClass(this.activeClass);
