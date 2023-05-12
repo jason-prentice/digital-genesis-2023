@@ -3,7 +3,6 @@ import { mainViewMode } from "./main-view-mode.js";
 import { teiAnchor } from "./tei-anchor.js";
 import { teiParallel } from "./tei-parallel.js";
 import { teiSection } from "./tei-section.js"
-import { popover } from "./popover.js";
 import { verseNumber } from "./verse-number.js";
 import { getParamValue } from "../helpers/hash-utils.js";
 import { 
@@ -17,6 +16,7 @@ import {
 
 export const teiContainer = {
     selector: "#TEI",
+	htmlContainerSelector: "#teiHtml",
 	defaultTei: "tei/gen_creation1_eden_cain-abel_noah-flood_babel_main_6.5.xml",
     compatibleViews: [CHAPTER_VIEW, CHIASTIC_VIEW, SECTION_VIEW],
 	populate: function(tei) {
@@ -26,9 +26,10 @@ export const teiContainer = {
 			const CETEIcean = new CETEI();
 			$(this.selector).attr("data-source", selectedTei);
 			const selector = this.selector;
+			const htmlContainerSelector = this.htmlContainerSelector;
 			CETEIcean.getHTML5(selectedTei, function(data) {
 				//Add CETEIcean output to teiContainer
-				$(`${selector} div`).html(data);	
+				$(`${htmlContainerSelector}`).html(data);	
 				$(`${selector} a`).attr("href", selectedTei);	
 				transformOutput();
 				scrollToRequestedParallel();
@@ -80,11 +81,9 @@ const scrollToRequestedParallel = () => {
 
 const transformOutput = () => {
 	teiAnchor.addNoteIcon();
-	teiAnchor.prepareNoteContent();
 	teiParallel.transform();
 	verseNumber.makeSuperscript();
 	teiSection.addSectionTitles();
-	popover.prepare();
 };
 
 

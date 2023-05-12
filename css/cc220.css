@@ -34,7 +34,8 @@ img {
 }
 
 a, tei-ref span a, .ui-widget-content a {
-  color: #ff4800
+  /* color: #ff4800 */
+  color: rgb(207, 97, 53);
 }
 
 select {
@@ -182,7 +183,7 @@ hr {
   top: 0;
   padding-top: 10px;
   background-color: white;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .panel .close:hover {
@@ -205,7 +206,7 @@ hr {
   line-height: 1.2em;
   position: sticky;
   top: 28px;
-  z-index: 60;
+  /* z-index: 60; */
   background-color: white;
   border-radius: 0 0 15px 15px;
 }
@@ -298,13 +299,13 @@ hr {
   width: 10px;
   writing-mode: vertical-rl;
   text-orientation: upright;
-  z-index: 999;
+  /* z-index: 999; */
   border-radius: 0 15px 15px 0;
   padding: 1em .25em 1em 10px;
 
 }
 #tools-toggle {
-  z-index: 999;
+  /* z-index: 999; */
 }
 
 #close-tools {
@@ -430,13 +431,30 @@ tei-div.active, #outlineHtml p.active {
   display: none;
 }
 
-/*POPOVERS*/
-.popover-header {
-  display: none;
+/*MODAL*/
+.modal-backdrop {
+  /* bug fix - no overlay */    
+  display: none;    
+}
+#noteModal .modal-content {
+  /* border-style: solid;
+  border-width: thin; */
+  /* border-color: lightsalmon; */
+  box-shadow: 5px 5px 5px lightgray;
 }
 
-.popover {
-  max-width: 600px;
+.modal-body {
+  font-family: Arial, Helvetica, sans-serif
+}
+
+.modal-dialog {
+  top:100px;
+}
+
+#noteModal hr {
+  background-color: lightsalmon;
+  height: .5px;
+  border: none;
 }
 
 /*Documentary Sources*/
