@@ -51,7 +51,7 @@ export const locationHandler = async () => {
     menu.clearActiveItem();
     
 
-    const { path, params } = deconstructHash();
+    let { path, params } = deconstructHash();
     if (window.location.hash.length == 0) {
         menu.makeItemActive("/");
     } else {

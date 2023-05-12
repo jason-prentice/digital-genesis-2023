@@ -4,7 +4,6 @@ export const popover = {
         .popover({
             container: "#TEI", 
             html: true, 
-            placement: "bottom", 
             sanitize: false
         });
     }

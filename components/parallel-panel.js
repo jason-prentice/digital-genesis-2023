@@ -10,7 +10,7 @@ export const parallelPanel = {
 	htmlSectionSelector: "#parallelHtml",
 	parallelLinkSelector: "#parallelLink",
 	toggleSelector: "#parallel-toggle",
-	toggleLabelSelector: "label[for='parallel-toggle']",
+	toggleInputSelector:"#parallel-toggle input",
 	compatibleViews: [CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, SECTION_VIEW],
 	defaultHtml: {
 		contents: "<p class='small'><i>Hover over a section of the outline to view the full contents in this panel.</i></p>",
@@ -29,7 +29,7 @@ export const parallelPanel = {
 	shouldBeVisible: function() {
 		const selectedView = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
-			if($(this.toggleSelector).is(':checked')){
+			if($(this.toggleInputSelector).is(':checked')){
 				return true;
 			} else {
 				return false;
@@ -42,16 +42,17 @@ export const parallelPanel = {
 		const selectedView = mainViewMode.getSelectedView();
 		if (this.compatibleViews.includes(selectedView)){
 			$(this.toggleSelector).show();
-			$(this.toggleLabelSelector).show();
 		} else {
 			$(this.toggleSelector).hide();
-			$(this.toggleLabelSelector).hide();
 		}
 		if(selectedView === OUTLINE_VIEW){
-			$(this.toggleLabelSelector).text("Show section text");
+			$(`${this.toggleSelector} span[class="content"]`).show();
+			$(`${this.toggleSelector} span[class="parallel"]`).hide();
+
 			$(this.htmlSectionSelector).html(this.defaultHtml.contents);
 		} else {
-			$(this.toggleLabelSelector).text("Show parallels");
+			$(`${this.toggleSelector} span[class="content"]`).hide();
+			$(`${this.toggleSelector} span[class="parallel"]`).show();
 			$(this.htmlSectionSelector).html(this.defaultHtml.parallel);
 		}
 	},
@@ -91,7 +92,7 @@ export const parallelPanel = {
 	}
 };
 
-$(document).on("change", parallelPanel.toggleSelector, function() {
+$(document).on("change", parallelPanel.toggleInputSelector, function() {
 	parallelPanel.setVisibility();
 })
 

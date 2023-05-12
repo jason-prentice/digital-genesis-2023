@@ -12,7 +12,7 @@ export const teiAnchor = {
                 html = html.replace(/"/g, "&quot;");
                 html = html.replace(/[.\s]+Comment:/g, "<hr />Comment:");
                 html = html.replace(/[.\s]+Alt\. Trans\.:/g, "<hr />Alt. Trans.:");
-                return `<a tabindex="0" data-toggle="popover" data-trigger="focus" data-content="${html}" />` ;
+                return `<a tabindex="0" data-toggle="popover" data-trigger="focus" title="thing" data-content="${html}" />` ;
             }
             return false;
         });       
