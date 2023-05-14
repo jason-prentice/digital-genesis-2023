@@ -7,3 +7,5 @@ export const SECTION_VIEW = "section-view";
 /*** PARAMS ***/
 export const VIEW_PARAM = "view";
 export const PARALLEL_PARAM = "parallel";
+export const EXCERPT_PARAM = "excerpt";
+export const SOURCE_PARAM = "source";

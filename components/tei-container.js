@@ -33,18 +33,20 @@ export const teiContainer = {
 				$(`${selector} a`).attr("href", selectedTei);	
 				transformOutput();
 				scrollToRequestedParallel();
+				teiSection.showSelectedExcerpt();
 			});	
 	    } else {
 		
 			$(document).ready(function() {
 				scrollToRequestedParallel();	
+				teiSection.showSelectedExcerpt();
 			});
 		}
 	   
     },
 	setMainView: function(){
 		const selector = this.selector;
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 
 		const views = mainViewMode.getViews();
 		views.forEach(function(view){
@@ -55,7 +57,7 @@ export const teiContainer = {
 		$(selector).addClass(selectedView);
 	},
 	setVisibility: function(){
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
 			$(this.selector).show();
 		} else {

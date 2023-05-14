@@ -8,7 +8,7 @@ export const tools = {
 	closeSelector: ".close[data-for='interp']",
 	compatibleViews: [CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, SECTION_VIEW],
 	setVisibility: function(){
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
 
 			if($(this.toggleSelector).is(':checked')){

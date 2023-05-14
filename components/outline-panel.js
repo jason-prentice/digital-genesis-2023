@@ -8,7 +8,7 @@ export const outlinePanel = {
 	htmlSectionSelector: "#outlineHtml",
 	compatibleViews: [OUTLINE_VIEW],
 	setVisibility: function(){
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
 			$(this.selector).show();
 		} else {

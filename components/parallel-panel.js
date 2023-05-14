@@ -27,7 +27,7 @@ export const parallelPanel = {
 		}
 	},
 	shouldBeVisible: function() {
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
 			if($(this.toggleInputSelector).is(':checked')){
 				return true;
@@ -39,13 +39,13 @@ export const parallelPanel = {
 		}
 	},
 	reset: function() {
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 		if (this.compatibleViews.includes(selectedView)){
 			$(this.toggleSelector).show();
 		} else {
 			$(this.toggleSelector).hide();
 		}
-		if(selectedView === OUTLINE_VIEW){
+		if({ selectedView } === OUTLINE_VIEW){
 			$(`${this.toggleSelector} span[class="content"]`).show();
 			$(`${this.toggleSelector} span[class="parallel"]`).hide();
 
@@ -57,7 +57,7 @@ export const parallelPanel = {
 		}
 	},
 	setHtml: function(sectionSelector) {
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 		if(selectedView === OUTLINE_VIEW){
 			if(sectionSelector) {
 				const html = $(sectionSelector).html();
@@ -80,7 +80,7 @@ export const parallelPanel = {
 		}
 	},
 	setMainView: function(){
-		const selectedView = mainViewMode.getSelectedView();
+		const { selectedView } = mainViewMode.getSelectedView();
 		const selector = this.selector;
 		const views = mainViewMode.getViews();
 		views.forEach(function(view){

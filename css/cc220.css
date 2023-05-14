@@ -363,6 +363,10 @@ tei-div.active, #outlineHtml p.active {
   margin-top: .5rem;
 }
 
+.chiastic-view tei-head, .section-view tei-head {
+  display: none;
+}
+
 .chiastic-view tei-div[type="section"][corresp]:before { 
   display: block;
   font-family: Arvo, sans-serif;
@@ -401,14 +405,22 @@ tei-div.active, #outlineHtml p.active {
 
 /*** SECTION TITLES ***/
 
+.chapter-view .sectionTitle,
+.chiastic-view .sectionTitle {
+  display: none;
+}
+
+.chiastic-view .sectionTitle[level='0'] {
+  display: unset;
+}
+
 .sectionTitle {
   display: block;
   font-family: Arvo, sans-serif;
 }
 
 .sectionTitle[level='0'] {
-  font-size: 150%;
-  font-weight: bold;
+  font-size: 180%;
 }
 
 .sectionTitle[level='1'] {
@@ -426,10 +438,6 @@ tei-div.active, #outlineHtml p.active {
   font-size: 100%;
 }
 
-.chapter-view .sectionTitle,
-.chiastic-view .sectionTitle {
-  display: none;
-}
 
 /*MODAL*/
 .modal-backdrop {

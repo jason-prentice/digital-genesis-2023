@@ -30,23 +30,26 @@
   <div id="text" class="hidden">
     <div id="text-header" >
       <div id="text-menu" class="btn-toolbar" role="toolbar">
-        <button type="button" class="btn btn-secondary">Chapters</button>
+        <button type="button" class="btn btn-light main-view-mode" data-view="chapter-view" data-source="tei-1">Chapters</button>
         <div class="dropdown">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            Stories
+          <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            Sections
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Dropdown link</a>
-            <a class="dropdown-item" href="#">Dropdown link</a>
+            <a class="dropdown-item main-view-mode" data-view="section-view" data-source="tei-1" data-selector="the_first_creation_story" href="#">The First Creation</a>
+            <a class="dropdown-item main-view-mode" data-view="section-view" data-source="tei-1" data-selector="eden" href="#">Eden</a>
+            <a class="dropdown-item main-view-mode" data-view="section-view" data-source="tei-1" data-selector="cain_and_abel" href="#">Cain and Abel</a>
+            <a class="dropdown-item main-view-mode" data-view="section-view" data-source="tei-1" data-selector="babel" href="#">Babel</a>
           </div>
         </div>
         <div class="dropdown">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            Poems
+          <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            Patterns
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Dropdown link</a>
-            <a class="dropdown-item" href="#">Dropdown link</a>
+            <a class="dropdown-item main-view-mode" data-view="chiastic-view" data-source="tei-1" data-selector="the_first_creation_story" href="#">The First Creation</a>
+            <a class="dropdown-item main-view-mode" data-view="chiastic-view" data-source="tei-1" data-selector="cain_and_abel" href="#">Cain and Abel</a>
+            <a class="dropdown-item main-view-mode" data-view="chiastic-view" data-source="tei-1" data-selector="noah_and_the_flood" href="#">Noah and the Flood</a>          
           </div>
         </div>
       </div>
@@ -130,6 +133,10 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div id="noteModalHtml"/>
       </div>
     </div>
   </div>

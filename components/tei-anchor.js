@@ -18,6 +18,6 @@ $("#noteModal").on('show.bs.modal', function (event) {
         html = html.replace(/[.\s]+Comment:/g, "<hr />Comment:");
         html = html.replace(/[.\s]+Alt\. Trans\.:/g, "<hr />Alt. Trans.:");
     }
-    const modal = $(this)
-    modal.find('.modal-body').html(html);
+    const modal = $(this);
+    modal.find('#noteModalHtml').html(html);
 });

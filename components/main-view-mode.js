@@ -1,12 +1,26 @@
-import { CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, PARALLEL_PARAM, SECTION_VIEW, VIEW_PARAM } from "../helpers/constants.js";
+import { CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, PARALLEL_PARAM, SECTION_VIEW, VIEW_PARAM, EXCERPT_PARAM, SOURCE_PARAM } from "../helpers/constants.js";
 import { getHref, addParam, deleteParam, getParamValue } from "../helpers/hash-utils.js";
 import { locationHandler } from "../helpers/location-handler.js";
 
 
 export const mainViewMode = {
-	selector: 'input[name="view"]',
-	setSelectedView: function(selectedView){
-		let modifications = [{func: addParam, param: VIEW_PARAM, value: selectedView}];
+	selector: '.main-view-mode',
+	setSelectedView: function(selectedView, selectedExcerpt, selectedSource){		
+		let modifications = [
+			{func: addParam, param: VIEW_PARAM, value: selectedView}
+		];
+
+		if (selectedExcerpt) {
+			modifications.push({func: addParam, param: EXCERPT_PARAM, value: selectedExcerpt});
+		} else {
+			modifications.push({func: deleteParam, param: EXCERPT_PARAM});
+		}
+
+		// if (selectedSource) {
+		// 	modifications.push({func: addParam, param: SOURCE_PARAM, value: selectedSource});
+		// } else {
+		// 	modifications.push({func: deleteParam, param: SOURCE_PARAM});
+		// }
 
 		if(selectedView === OUTLINE_VIEW) {
 			modifications.push({func: deleteParam, param: PARALLEL_PARAM});
@@ -17,24 +31,35 @@ export const mainViewMode = {
     	locationHandler();
 	},
 	showSelectedView: function(){
-		const selectedView = this.getSelectedView();
-		$(`${this.selector}[value='${selectedView}']`).prop('checked', true);
+		const { selectedView, selectedExcerpt } = this.getSelectedView();
+		$(`#text-menu button`).removeClass("active");
+		$("[data-view]").removeClass("active");
+		if (selectedView === CHAPTER_VIEW ) {
+			$(`button[data-view='${selectedView}']`).addClass("active");
+		}
+		$(`[data-view='${selectedView}'][data-selector='${selectedExcerpt}']`).addClass("active");
+		$(`[data-view='${selectedView}'][data-selector='${selectedExcerpt}']`).closest(".dropdown-menu").siblings("button").addClass("active");
 
 	},
 	getSelectedView: function(){
 		let selectedView = getParamValue(VIEW_PARAM);
+		const selectedExcerpt = getParamValue(EXCERPT_PARAM);
+		const selectedSource = getParamValue(SOURCE_PARAM);
 		if (!selectedView || !this.getViews().includes(selectedView)) { 
 			selectedView = CHAPTER_VIEW;
 			this.setSelectedView(selectedView);
 		};
-		return selectedView;
+		return {selectedView, selectedExcerpt, selectedSource};
 	},
 	getViews: function(){
 		return [CHAPTER_VIEW, CHIASTIC_VIEW, SECTION_VIEW, OUTLINE_VIEW];
 	}
 };
 
-$(document).on("change", mainViewMode.selector, function(event) {
-	const selectedView = event.currentTarget.value;
-	mainViewMode.setSelectedView(selectedView);
+$(document).on("click", mainViewMode.selector, function(event) {
+	const selectedView = event.currentTarget.getAttribute("data-view");
+	const selectedExcerpt = event.currentTarget.getAttribute("data-selector");
+	const selectedSource = event.currentTarget.getAttribute("data-source");
+	mainViewMode.setSelectedView(selectedView, selectedExcerpt, selectedSource);
+	event.preventDefault();
 });
