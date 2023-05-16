@@ -35,7 +35,8 @@ img {
 
 a, tei-ref span a, .ui-widget-content a {
   /* color: #ff4800 */
-  color: rgb(207, 97, 53);
+  /* color: rgb(207, 97, 53); */
+  color: tomato;
 }
 
 select {
@@ -93,7 +94,8 @@ hr {
 }
 
 .nav-item.active {
-  border-bottom: 2px solid lightsalmon;
+  /* border-bottom: 2px solid lightsalmon; */
+  border-bottom: 2px solid tomato;
 }
 
 /*Main*/
@@ -135,6 +137,21 @@ hr {
 /*Text Menu*/
 #text-menu button {
   margin-left: .25rem;;
+}
+
+.dropdown-item[class='active'] {
+  background-color: tomato;
+}
+
+/*VIEW OPTIONS*/
+#parallel-toggle i,
+#tools-toggle i {
+  margin-right: .5rem;
+}
+
+#parallel-toggle:hover,
+#tools-toggle:hover {
+  cursor: pointer;
 }
 
 
@@ -339,7 +356,8 @@ hr {
 
 tei-anchor:hover{
   cursor: pointer;
-  color: lightsalmon;
+  /* color: lightsalmon; */
+  color: tomato
 }
 
 tei-persname:hover, tei-placename:hover{
@@ -417,6 +435,7 @@ tei-div.active, #outlineHtml p.active {
 .sectionTitle {
   display: block;
   font-family: Arvo, sans-serif;
+  margin-top: 1rem;
 }
 
 .sectionTitle[level='0'] {
@@ -460,7 +479,8 @@ tei-div.active, #outlineHtml p.active {
 }
 
 #noteModal hr {
-  background-color: lightsalmon;
+  /* background-color: lightsalmon; */
+  background-color: tomato;
   height: .5px;
   border: none;
 }

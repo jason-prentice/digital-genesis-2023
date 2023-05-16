@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
   <meta name="description" content="">
-  <link rel="stylesheet" href="css/jquery-ui.css" />
   <link rel="stylesheet" href="css/CETEIcean.css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
   <link rel="stylesheet" href="css/cc220.css">
 </head>
 <body>
 
-<div id="navbar">
+<div id="navbar" class="navbar navbar-dark bg-dark">
   <span id="nav-brand"><a href="">The Book of Genesis <span class="light small">Digital Edition Spring 2023</span></a></span> 
   <div id="nav-items">
     <a class="nav-item" data-section="home" href="/">Home</a>
@@ -54,17 +55,27 @@
         </div>
       </div>
 
-      <div  id="parallel-toggle" class="checkbox">
-        <label>
-          <input type="checkbox"> 
-            <span class="content">Show section content</span>
-            <span class="parallel">Show parallels</span>
-        </label>
+      <div>
+
+        <!-- <div id="tools-toggle" class="form-check form-check-inline">
+          <i id="tools-toggled-off" class="fa-regular fa-square text-secondary"></i>
+          <i id="tools-toggle-on" class="fa-solid fa-square-check text-secondary"></i>
+          <label class="form-check-label" for="inlineCheckbox1">Tools</label>
+        </div> -->
+        <div id="parallel-toggle" class="form-check form-check-inline">
+          <i id="parallel-toggle-off" class="fa-regular fa-square text-secondary"></i>
+          <i id="parallel-toggle-on" class="fa-solid fa-square-check text-secondary"></i>
+          <label class="form-check-label" for="inlineCheckbox2">
+            <span class="parallel">Parallels</span>
+            <span class="content">Sections</span>
+          </label>
+        </div>
       </div>
+
 
     </div> 
     
-      <input type="checkbox" id="tools-toggle" data-for="tools" class="menu-item offscreen"/>
+      <input type="checkbox" id="tools-togglex" data-for="tools" class="menu-item offscreen"/>
       <label for="tools-toggle" id="tools-toggle-label" aria-label="Show tools for engaging with text"><span><i id="open-tools" class="fa fa-chevron-right light" data-for="interp" aria-hidden="true"></i><span class="sr-only">Open the tools panel</span></span></label>
     <div id="text-content">
 

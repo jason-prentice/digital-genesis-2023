@@ -2,34 +2,41 @@ import { locationHandler } from "../helpers/location-handler.js";
 import { teiParallel } from "./tei-parallel.js";
 import { mainViewMode } from "./main-view-mode.js";
 import { outlinePanel } from "./outline-panel.js";
-import { getHref, addParam, deleteParam } from "../helpers/hash-utils.js";
-import { CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, PARALLEL_PARAM, SECTION_VIEW } from "../helpers/constants.js";
+import { getHref, addParam, deleteParam, getParamValue } from "../helpers/hash-utils.js";
+import { CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, PARALLEL_PARAM, SECTION_VIEW, SHOW_SECTION_PARAM } from "../helpers/constants.js";
 
 export const parallelPanel = {
 	selector: "#parallel",
 	htmlSectionSelector: "#parallelHtml",
 	parallelLinkSelector: "#parallelLink",
 	toggleSelector: "#parallel-toggle",
-	toggleInputSelector:"#parallel-toggle input",
+	toggleOnSelector:"#parallel-toggle-on",
+	toggleOffSelector:"#parallel-toggle-off",
 	compatibleViews: [CHAPTER_VIEW, CHIASTIC_VIEW, OUTLINE_VIEW, SECTION_VIEW],
 	defaultHtml: {
 		contents: "<p class='small'><i>Hover over a section of the outline to view the full contents in this panel.</i></p>",
 		parallel: "<p class='small'><i>Hover over a section of the text to view its parallel in this panel.</i></p>"
 	},
 	setVisibility: function() {
-		if(this.shouldBeVisible(mainViewMode)){
+		if(this.shouldBeVisible()){
 			$(this.selector).show();
+			$(this.toggleOffSelector).hide();
+			$(this.toggleOnSelector).show();
 		} else {
 			$(this.selector).hide();
+			$(this.toggleOffSelector).show();
+			$(this.toggleOnSelector).hide();
 			this.reset();
 			teiParallel.clearHighlighting();
 			outlinePanel.clearHighlighting();
 		}
+		this.reset();
 	},
 	shouldBeVisible: function() {
 		const { selectedView } = mainViewMode.getSelectedView();
 		if(this.compatibleViews.includes(selectedView)){
-			if($(this.toggleInputSelector).is(':checked')){
+			const param = getParamValue(SHOW_SECTION_PARAM);
+			if(param === "true"){
 				return true;
 			} else {
 				return false;
@@ -40,11 +47,6 @@ export const parallelPanel = {
 	},
 	reset: function() {
 		const { selectedView } = mainViewMode.getSelectedView();
-		if (this.compatibleViews.includes(selectedView)){
-			$(this.toggleSelector).show();
-		} else {
-			$(this.toggleSelector).hide();
-		}
 		if({ selectedView } === OUTLINE_VIEW){
 			$(`${this.toggleSelector} span[class="content"]`).show();
 			$(`${this.toggleSelector} span[class="parallel"]`).hide();
@@ -63,7 +65,6 @@ export const parallelPanel = {
 				const html = $(sectionSelector).html();
 
 				$(this.htmlSectionSelector).html(html);
-				$(this.htmlSectionSelector).find('a[data-toggle="popover"]').remove();
 				
 			} else {
 				$(this.htmlSectionSelector).html(this.defaultHtml.contents);
@@ -73,7 +74,6 @@ export const parallelPanel = {
 				const partnerId = $(`${teiParallel.selector}[corresp='${sectionSelector}']`).attr("id");
 				
 				$(this.htmlSectionSelector).html(`<span id='parallelLink' data-section='${sectionSelector}' data-corresp='#${partnerId}'>Parallel: <a href='#'>${$(sectionSelector).attr("display")}</a></span>${$(sectionSelector).html()}`);
-				$(this.htmlSectionSelector).find('a[data-toggle="popover"]').remove();
 			} else {
 				$(this.htmlSectionSelector).html("<span id='parallelLink'>Parallel: none</span>");
 			}
@@ -92,8 +92,22 @@ export const parallelPanel = {
 	}
 };
 
-$(document).on("change", parallelPanel.toggleInputSelector, function() {
-	parallelPanel.setVisibility();
+$(document).on("click", parallelPanel.toggleSelector, function() {
+	const currentVisibility = parallelPanel.shouldBeVisible();
+	let href;
+	if (currentVisibility) {
+		href = getHref([	
+			{func: deleteParam, param: SHOW_SECTION_PARAM}
+		]);
+	} else {
+		href = getHref([
+			{func: addParam, param: SHOW_SECTION_PARAM, value: true}
+		]);
+
+	}			
+			
+	window.history.pushState({}, "", href);
+	locationHandler();
 })
 
 $(document).on("click", parallelPanel.parallelLinkSelector , function(event) {

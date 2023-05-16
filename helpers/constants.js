@@ -9,3 +9,5 @@ export const VIEW_PARAM = "view";
 export const PARALLEL_PARAM = "parallel";
 export const EXCERPT_PARAM = "excerpt";
 export const SOURCE_PARAM = "source";
+export const SHOW_SECTION_PARAM = "show-section";
+export const SHOW_TOOLS_PARAM = "show-tools";

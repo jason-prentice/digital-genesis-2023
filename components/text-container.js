@@ -20,7 +20,6 @@ export const textContainer = {
         teiContainer.setVisibility();
         parallelPanel.setMainView();
         parallelPanel.setVisibility();
-        parallelPanel.reset();
         documentarySources.setVisibility();
         outlinePanel.setVisibility();
         tools.setVisibility();

@@ -5,13 +5,14 @@ import { locationHandler } from "../helpers/location-handler.js";
 
 export const mainViewMode = {
 	selector: '.main-view-mode',
-	setSelectedView: function(selectedView, selectedExcerpt, selectedSource){		
+	setSelectedView: function(selectedView, selectedExcerpt){		
 		let modifications = [
 			{func: addParam, param: VIEW_PARAM, value: selectedView}
 		];
 
 		if (selectedExcerpt) {
 			modifications.push({func: addParam, param: EXCERPT_PARAM, value: selectedExcerpt});
+			modifications.push({func: deleteParam, param: PARALLEL_PARAM});
 		} else {
 			modifications.push({func: deleteParam, param: EXCERPT_PARAM});
 		}
@@ -25,6 +26,7 @@ export const mainViewMode = {
 		if(selectedView === OUTLINE_VIEW) {
 			modifications.push({func: deleteParam, param: PARALLEL_PARAM});
 		}
+
 		const href = getHref(modifications);
 
 		window.history.pushState({}, "", href);
@@ -59,7 +61,7 @@ export const mainViewMode = {
 $(document).on("click", mainViewMode.selector, function(event) {
 	const selectedView = event.currentTarget.getAttribute("data-view");
 	const selectedExcerpt = event.currentTarget.getAttribute("data-selector");
-	const selectedSource = event.currentTarget.getAttribute("data-source");
-	mainViewMode.setSelectedView(selectedView, selectedExcerpt, selectedSource);
+	// const selectedSource = event.currentTarget.getAttribute("data-source");
+	mainViewMode.setSelectedView(selectedView, selectedExcerpt);
 	event.preventDefault();
 });
