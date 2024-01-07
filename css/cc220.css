@@ -136,7 +136,13 @@ hr {
 
 /*Text Menu*/
 #text-menu button {
-  margin-left: .25rem;;
+  margin-left: .25rem;
+}
+
+#text-menu button:focus,
+#text-menu button:hover {
+  background-color: white;
+  border-color: white;
 }
 
 .dropdown-item[class='active'] {
@@ -144,9 +150,15 @@ hr {
 }
 
 /*VIEW OPTIONS*/
+#parallel-toggle label,
+#tools-toggle label {
+  margin-top: .5rem;
+}
+
 #parallel-toggle i,
 #tools-toggle i {
   margin-right: .5rem;
+  margin-top: .5rem;
 }
 
 #parallel-toggle:hover,
@@ -546,7 +558,12 @@ tei-div.active, #outlineHtml p.active {
 
 
 /*Media Queries*/
-@media screen and (max-width:650px) {
+@media screen and (max-width:800px) {
+ 
+  button {
+   color: green;
+  }
+
   #text-content {
      flex-direction: column;
   }
